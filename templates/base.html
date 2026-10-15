@@ -1,0 +1,74 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Подключаем глобальный файл стилей из корня -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- Подключаем иконки FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.2/css/all.css">
+
+    <title>{% block title %}Home{% endblock %} | Tasty! </title>
+
+    <!-- Приемник для уникальных стилей страниц (например, личного кабинета) -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<div class="nav-menu">
+    <p class="logo">
+        <a href="{% url 'index' %}" style="display: flex; align-items: center; gap: 10px;">
+            <img src="{% static 'images/logo.png' %}" alt="Tasty!" class="logos-img" style="height: 40px; width: auto;">
+            Tasty!
+        </a>
+    </p>
+
+    <nav class="main-menu-links">
+        <ul>
+
+            <li><a href="{% url 'help_page' %}"><i class="fa-solid fa-handshake"></i> Help</a></li>
+
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'personal' %}"><i class="fa-solid fa-user-gear"></i> Profile ({{ user.username }})</a></li>
+                <li>
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn-submit" style="background: none; border: none; cursor: pointer; color: inherit;">
+                            <i class="fa-solid fa-right-from-bracket"></i> Log out
+                        </button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'register' %}"><i class="fa-solid fa-user-plus"></i> Register</a></li>
+                <li><a href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i> Log in</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<main class="content">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer class="down">
+    <div class="footer-container">
+        <div class="footer-left">
+            <p class="footer-copy">&copy; 2026 <strong>Tasty</strong>. All rights reserved.</p>
+        </div>
+
+        <div class="footer-socials">
+            <a href="https://t.me/+s0TI4aGg6NY4ZWQ0" target="_blank" class="social-icon-link tg"><i class="fa-brands fa-telegram"></i></a>
+            <a href="https://youtube.com" target="_blank" class="social-icon-link yt"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://instagram.com" target="_blank" class="social-icon-link ig"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Сюда прилетают уникальные скрипты страниц, а скрипт слайдера мы перенесем на главную -->
+{% block extra_js %}{% endblock %}
+
+</body>
+</html>

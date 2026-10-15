@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Tasty Landing{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block content %}
+   {% if user.is_authenticated %}
+        <!-- тут страница главная для залогиненных пользователей-->
+
+    {% else %}
+        <!--здесь шаблоны подключаем, но я еще их не придумал и не создал-->
+
+    {% endif %}
+
+
+{% endblock %}
+
+{%block extra_js%}
+
+{%endblock%}
